@@ -3,20 +3,15 @@
 
 Watcher::Watcher(string _directory)
 {
+    _directory[_directory.size() - 1] = '\0';
     this->_directory = _directory;
     try
     {
-        for(auto& p: recursive_directory_iterator(_directory.c_str()))
-        {
-        if(p.is_directory())
-        {
-            string dir = (p.path().string());
-            int size = 0;
-            for(auto& s: directory_iterator(dir + "/")) size++;
-            directories[dir] = size;
-            directoriesKeys.push_back(dir);
-        }
-     }   
+        //cout << _directory[_directory.size() - 1] << endl;
+        string dir = _directory;
+        int size = 0;
+        for(auto& s: directory_iterator(dir + "/")) size++;
+        directories[dir] = size; 
     }
     catch(const std::exception& e)
     {
@@ -39,11 +34,8 @@ string Watcher::watching()
 {
     while(true)
     {
-        for(int i = 0 ; i < directoriesKeys.size() ; i++)
-        {
-            int size = 0;
-            for(auto& p : directory_iterator(directoriesKeys[i] + "/")) size++;
-            if(directories[directoriesKeys[i]] != size) return directoriesKeys[i];
-        }
+        int size = 0;
+        for(auto& p : directory_iterator(this->_directory + "/")) size++;
+        if(directories[this->_directory] != size) return this->_directory;
     }
 }
