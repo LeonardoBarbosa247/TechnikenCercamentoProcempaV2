@@ -10,11 +10,11 @@ Watcher::Watcher(string _directory)
         {
         if(p.is_directory())
         {
-            ifstream file((p.path().string() + "/").c_str(), ios::binary | ios::ate );
-            pair<string, int> myPair;
-            myPair.first = (p.path().string() + "/");
-            myPair.second = file.tellg();
-            path.push_back(myPair);
+            string dir = (p.path().string());
+            int size = 0;
+            for(auto& s: directory_iterator(dir + "/")) size++;
+            directories[dir] = size;
+            directoriesKeys.push_back(dir);
         }
      }   
     }
@@ -39,17 +39,11 @@ string Watcher::watching()
 {
     while(true)
     {
-        int i = 0;
-        for(auto& p: recursive_directory_iterator(this->_directory.c_str()))
+        for(int i = 0 ; i < directoriesKeys.size() ; i++)
         {
-            if(p.is_directory())
-            {
-                ifstream file((p.path().string() + "/").c_str(), ios::binary | ios::ate );
-                if(path[i++].second != file.tellg())
-                {
-                    return (p.path().string());
-                }
-            }
+            int size = 0;
+            for(auto& p : directory_iterator(directoriesKeys[i] + "/")) size++;
+            if(directories[directoriesKeys[i]] != size) return directoriesKeys[i];
         }
     }
 }

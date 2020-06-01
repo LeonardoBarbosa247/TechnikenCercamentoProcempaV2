@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <sstream>
 #include <iostream>
+#include <map>
 
 
 using namespace std;
@@ -15,15 +16,9 @@ using namespace std::filesystem;
 class Watcher
 {
     private:
-        /*
-        vector<string> path;
-        vector<int> size;
-        */
-        vector<pair<string,int>> path;
+        map<string, int> directories;
         string _directory;
-        //bool running;
-        //void threadPrint();
-        //void threadWatching(string* ss);
+        vector<string> directoriesKeys;
     public:
         Watcher(string directory);
         ~Watcher();
