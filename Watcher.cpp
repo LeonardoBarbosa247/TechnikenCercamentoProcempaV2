@@ -4,11 +4,13 @@
 Watcher::Watcher(string _directory)
 {
     _directory[_directory.size() - 1] = '\0';
-    this->_directory = _directory;
+    string aux;
+    for(int i = 0 ; i < _directory.size() - 1 ; i++) aux+=_directory[i];
+    this->_directory = aux;
     try
     {
         //cout << _directory[_directory.size() - 1] << endl;
-        string dir = _directory;
+        string dir = this->_directory;
         int size = 0;
         for(auto& s: directory_iterator(dir + "/")) size++;
         directories[dir] = size; 

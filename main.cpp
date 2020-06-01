@@ -66,6 +66,12 @@ int main(int argc, char** argv)
     string ip = origin.filename();
     path originPath = (origin.string() + origin.preferred_separator);
 
+//    string ip = "10_209_210_4";
+//    path originPath = "/Users/leonardo_barbosa/Documents/Teste/10_209_210_4/";
+    cout << "ip: " << ip << endl;
+    cout << "originPath: " << originPath.string() << endl;
+
+    //return 0;
     if(argc > 3)
     {
         /* 
@@ -81,6 +87,7 @@ int main(int argc, char** argv)
 
     for(auto& p : recursive_directory_iterator(originPath.string().c_str()))
     {  
+        //cout << "1 " << endl;
         if(p.path().extension() == ".jpg")
         {
             /*
@@ -127,7 +134,7 @@ int main(int argc, char** argv)
         }
     }
 
-
+    //cout << "2 " << endl;
     pair< string, string > lastDateAndHour;
     if(memoryDateAndHour.first.size() > 0) lastDateAndHour = memoryDateAndHour;
 
@@ -162,6 +169,7 @@ int main(int argc, char** argv)
                                 Se a última placa processada for igual à placa que está sendo, agora, analisada, deve-se:
                                     - Excluir esta placa, pois já foi movida uma outra versão da mesma
                             */
+                            //cout << "3 " << endl;
                             flag = false;
                             string rm = "lixo";
                             create_directory(destiny/rm);
@@ -174,6 +182,7 @@ int main(int argc, char** argv)
                             Apenas move esta placa se lastDateAndHour estiver vázio, ou seja, é a primeira placa que está sendo processada e é a primeira vez que o programa é executada
                             Quando mover, deve-se salvar os dados de data e hora da placa, assim como salvar que esta fora a última placa processada
                         */
+                        //cout << "5 " << endl;
                         create_directory(destiny/ip);
                         rename(originPath/valid[keysValid[i]][j]->getFile(), destiny/ip/valid[keysValid[i]][j]->getFile() );
                         pairDataAndHourValidProcessed[valid[keysValid[i]][j]->getDateAndHour()] = true;
@@ -210,6 +219,7 @@ int main(int argc, char** argv)
                             Se a placa da memória (última placa processada no programa executado anteriormente) for igual à placa que estou analisando:
                             Deve-se excluir, então, a placa que estou analisando
                         */
+                        //cout << 6 << endl;
                         flag = false;
                         string rm = "lixo";
                         create_directory(destiny/rm);
@@ -257,7 +267,7 @@ int main(int argc, char** argv)
             
         }
     }
-
+    //cout << "4" << endl;
     for(int i = 0 ; i < keysUnvalid.size() ; i++)
     {
         if(!pairDataAndHourValidProcessed[keysUnvalid[i]]) // Quer dizer que não tem nenhuma placa válida movida neste horário
